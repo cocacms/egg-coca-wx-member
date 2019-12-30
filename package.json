@@ -1,0 +1,19 @@
+{
+  "name": "egg-coca-wx-member",
+  "version": "1.0.0",
+  "description": "coca wx member",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rojer95/egg-coca-wx-member.git"
+  },
+  "eggPlugin": {
+    "name": "cocaWxMember",
+    "dependencies": [
+      "sequelize",
+      "cocaUserPermission"
+    ]
+  },
+  "dependencies": {
+    "mp-sdk-rojer": "^0.2.0"
+  }
+}
