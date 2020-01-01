@@ -14,6 +14,6 @@
     ]
   },
   "dependencies": {
-    "mp-sdk-rojer": "^0.2.0"
+    "mp-sdk-rojer": "^0.2.1"
   }
 }
