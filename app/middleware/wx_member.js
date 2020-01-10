@@ -21,7 +21,7 @@ module.exports = (need_login = true) => {
     }
 
     if (memberId) {
-      ctx.member = await ctx.app.model.WxMember.findOne({
+      ctx.wx_member = await ctx.app.model.WxMember.findOne({
         where: { id: memberId }
       });
     }
