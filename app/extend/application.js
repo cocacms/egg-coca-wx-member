@@ -21,12 +21,12 @@ module.exports = {
     if (!this[WEAPPSDK][key]) {
       let appId, appSecret;
       if (this.config.weapp[key]) {
-        appid = this.config.weapp[key].appId;
+        appId = this.config.weapp[key].appId;
         appSecret = this.config.weapp[key].appSecret;
       }
 
       if (!appId || !appSecret) {
-        appid = this.config.weapp.appId;
+        appId = this.config.weapp.appId;
         appSecret = this.config.weapp.appSecret;
       }
 
@@ -34,7 +34,7 @@ module.exports = {
         throw new Error("appId，appSecret 不存在");
       }
 
-      this[WEAPPSDK][key] = this.create_weapp(key);
+      this[WEAPPSDK][key] = this.create_weapp(key, appId, appSecret);
     }
 
     return this[WEAPPSDK][key];
