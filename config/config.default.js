@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-exports.wxMember = {
-  appId: '',
-  appSecret: '',
+exports.weapp = {
+  appId: "",
+  appSecret: ""
 };

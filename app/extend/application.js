@@ -1,26 +1,53 @@
-'use strict';
-const weappsdk = require('mp-sdk-rojer');
+"use strict";
+const weappsdk = require("mp-sdk-rojer");
 
-const WEAPPTOKEN = Symbol('Application#weapptoken');
-const WEAPPSDK = Symbol('Application#weappsdk');
+const WEAPPTOKEN = Symbol("Application#weapptoken");
+const WEAPPSDK = Symbol("Application#weappsdk");
 
 module.exports = {
-  get weapp_token() {
-    return this[WEAPPTOKEN] || {};
+  get_weapp_token(key) {
+    if (!this[WEAPPTOKEN]) return {};
+    return this[WEAPPTOKEN][key] || {};
   },
 
-  set weapp_token(value) {
-    this[WEAPPTOKEN] = value;
+  set_weapp_token(key, value) {
+    if (!this[WEAPPTOKEN]) this[WEAPPTOKEN] = {};
+    this[WEAPPTOKEN][key] = value;
   },
 
-  get weapp() {
-    if (this[WEAPPSDK]) return this[WEAPPSDK];
-    this[WEAPPSDK] = weappsdk(
-      this.config.wxMember.appId,
-      this.config.wxMember.appSecret,
-      () => this.weapp_token,
-      value => (this.weapp_token = value)
+  weapp(key = "default") {
+    if (!this[WEAPPSDK]) this[WEAPPSDK] = {};
+
+    if (!this[WEAPPSDK][key]) {
+      let appId, appSecret;
+      if (this.config.weapp[key]) {
+        appid = this.config.weapp[key].appId;
+        appSecret = this.config.weapp[key].appSecret;
+      }
+
+      if (!appId || !appSecret) {
+        appid = this.config.weapp.appId;
+        appSecret = this.config.weapp.appSecret;
+      }
+
+      if (!appId || !appSecret) {
+        throw new Error("appId，appSecret 不存在");
+      }
+
+      this[WEAPPSDK][key] = this.create_weapp(key);
+    }
+
+    return this[WEAPPSDK][key];
+  },
+
+  create_weapp(key, appid, appSecret) {
+    return weappsdk(
+      appid,
+      appSecret,
+      () => this.get_weapp_token(key),
+      value => {
+        this.set_weapp_token(key, value);
+      }
     );
-    return this[WEAPPSDK];
-  },
+  }
 };
